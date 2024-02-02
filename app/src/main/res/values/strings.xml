@@ -11,7 +11,7 @@
     <string name="btn_signin">Registrarse</string>
 
 
-    <string name="text_login">Bienvenido de vuelta &#x270C;!</string>
+    <string name="text_login">¡Bienvenido de vuelta! &#x270C;</string>
     <string name="btn_login">Iniciar Sesión</string>
     <string name="btn_google">Google</string>
     <string name="text_login2">¿Aún no se ha registrado?</string>
@@ -20,6 +20,18 @@
 
     <string name="text_or">O</string>
 
+    <string name="text_error_empty">Este cmapo no puede estar vacío</string>
+    <string name="text_error_email">Ingrese un correo electrónico válido</string>
+    <string name="text_error_nouser">No se encuentra ninguna cuenta registrada a este correo</string>
+    <string name="text_error_duplicate">Ya existe una cuenta registrada con este correo</string>
+    <string name="text_error_credentials">El correo o la contraseña no coinciden</string>
+    <string name="text_error_toomany">Demasiados intentos, espere un momento</string>
+    <string name="default_web_client_id">252731654857-97r4ttdub1v9hudku8mlftdn0vn30kba.apps.googleusercontent.com</string>
+
+
+    <string name="google_provider">Google</string>
+    <string name="email_provider">Email</string>
+    <string name="default_prof_pic">https://firebasestorage.googleapis.com/v0/b/task-manager-33cd5.appspot.com/o/User_photos%2Fdefault.jpg?alt=media&amp;token=782ad5ab-2d68-4662-8912-46b7c749ab7b</string>
 
 
 </resources>

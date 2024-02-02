@@ -23,4 +23,22 @@
         <item name="android:textColorHint">@color/gray_light</item>
         <item name="hintTextColor">@color/main_button</item>
     </style>
+
+    <style name="base_btnStyle" parent="Widget.MaterialComponents.Button.Icon">
+        <item name="android:backgroundTint">@color/main_button</item>
+        <item name="android:fontFamily">@font/outfit_bold</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+
+    <style name="google_btnStyle" parent="Widget.MaterialComponents.Button.TextButton.Icon">
+        <item name="android:backgroundTint">@color/white2</item>
+        <item name="android:fontFamily">@font/outfit_bold</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:textSize">17sp</item>
+        <item name="icon">@drawable/google_icon</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconTint">@null</item>
+    </style>
+
 </resources>

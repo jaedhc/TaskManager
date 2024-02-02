@@ -90,17 +90,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_google" />
 
-
     <Button
         android:id="@+id/btn_login"
-        style="@style/Widget.MaterialComponents.Button.Icon"
+        style="@style/base_btnStyle"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:backgroundTint="@color/main_button"
-        android:fontFamily="@font/outfit_bold"
         android:text="@string/btn_login"
-        android:textColor="@color/white"
-        android:textSize="17sp"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
         app:layout_constraintBottom_toTopOf="@+id/textView2"
@@ -141,20 +136,13 @@
 
     <Button
         android:id="@+id/btn_google"
-        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+        style="@style/google_btnStyle"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:backgroundTint="@color/white2"
-        android:fontFamily="@font/outfit_bold"
         android:text="@string/btn_google"
-        android:textColor="@color/gray"
-        android:textSize="17sp"
-        app:icon="@drawable/google_icon"
-        app:iconGravity="textStart"
-        app:iconTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -185,5 +173,17 @@
         app:layout_constraintEnd_toEndOf="@+id/text_signin3"
         app:layout_constraintStart_toStartOf="@+id/text_signin3"
         app:layout_constraintTop_toBottomOf="@+id/text_signin3" />
+
+    <ProgressBar
+        android:id="@+id/prograss_bar_login"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:indeterminate="true"
+        android:background="@drawable/bg_loading"
+        android:indeterminateDrawable="@drawable/new_progress_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
