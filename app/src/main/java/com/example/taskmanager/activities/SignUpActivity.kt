@@ -1,22 +1,22 @@
 package com.example.taskmanager.activities
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.widget.doAfterTextChanged
 import com.example.taskmanager.R
 import com.example.taskmanager.databinding.ActivityMainBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
-import kotlinx.coroutines.tasks.await
 import java.util.UUID
 
 class SignUpActivity : AppCompatActivity() {
@@ -29,7 +29,6 @@ class SignUpActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         init()
     }
 
@@ -37,19 +36,22 @@ class SignUpActivity : AppCompatActivity() {
         binding.prograssBarSignup.visibility = View.INVISIBLE
 
         binding.btnGoToLogIn.setOnClickListener {
-            callLogIn()
+            finish()
         }
 
         binding.btnSignin.setOnClickListener {
             val userName = binding.textUsername.text.toString()
             val userEmail = binding.textEmail.text.toString()
             val userPassword = binding.textPassword.text.toString()
+            val userRepeat = binding.textRepeat.text.toString()
 
-            verifyUserInfo(userName, userEmail, userPassword)
+            //binding.textUsername.doAfterTextChanged { }
+
+            verifyUserInfo(userName, userEmail, userPassword, userRepeat)
         }
     }
 
-    private fun verifyUserInfo(name:String, email:String, pass:String){
+    private fun verifyUserInfo(name:String, email:String, pass:String, passRepeat:String){
 
         val pattern = Patterns.EMAIL_ADDRESS
         var error = false
@@ -74,10 +76,17 @@ class SignUpActivity : AppCompatActivity() {
             error = true
         }
 
+        if(pass != passRepeat){
+            binding.boxPassword.error = getString(R.string.text_error_dontmatches)
+            binding.boxRepeat.error = getString(R.string.text_error_dontmatches)
+            error = true
+        }
+
         if(!error){
             binding.boxUsername.error = null
             binding.boxEmail.error = null
             binding.boxPassword.error = null
+            binding.boxRepeat.error = null
 
             signUpUser(name, email, pass)
         }
@@ -85,7 +94,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun signUpUser(name:String, email:String, pass:String){
-        binding.prograssBarSignup.visibility = View.VISIBLE
+        //binding.prograssBarSignup.visibility = View.VISIBLE
 
         auth = Firebase.auth
         val db = Firebase.firestore
@@ -104,37 +113,34 @@ class SignUpActivity : AppCompatActivity() {
         //Creación de una nueva cuenta mediante firebase email auth
         auth.createUserWithEmailAndPassword(email, pass)
             .addOnCompleteListener{ task ->
-            if(task.isSuccessful){
-                //Agregar los datos del usuario a la base de datos de firestore
-                db.collection("Users")
-                    .document(uniqueID).set(user)
-                    .addOnCompleteListener{
-                    if(it.isSuccessful){
-                        Toast.makeText(this, "Cuenta creada con éxito", Toast.LENGTH_LONG).show()
-                        binding.prograssBarSignup.visibility = View.INVISIBLE
-                        //Mandar el id del usuario a la página principal
-                        sharedPreferences.edit().putString("prefUserId", uniqueID).apply()
-                        callTest()
-                    } else {
-                        Toast.makeText(this, "${task.exception}", Toast.LENGTH_LONG).show()
-                        binding.prograssBarSignup.visibility = View.INVISIBLE
-                    }
+                if(task.isSuccessful){
+                    //Agregar los datos del usuario a la base de datos de firestore
+                    db.collection("Users")
+                        .document(uniqueID).set(user)
+                        .addOnCompleteListener{
+                            if(it.isSuccessful){
+                                Firebase.auth.currentUser?.sendEmailVerification()
+                                Toast.makeText(this, "Verifique su correo electrónico", Toast.LENGTH_LONG).show()
+                                binding.prograssBarSignup.visibility = View.INVISIBLE
+                                //callLogin()
+                            } else {
+                                Toast.makeText(this, "${task.exception}", Toast.LENGTH_LONG).show()
+                                binding.prograssBarSignup.visibility = View.INVISIBLE
+                            }
+                        }
                 }
-            } else {
-                if(task.exception is FirebaseAuthUserCollisionException){
-                    binding.boxEmail.error = getString(R.string.text_error_duplicate)
-                    binding.prograssBarSignup.visibility = View.INVISIBLE
-                }
+                binding.prograssBarSignup.visibility = View.INVISIBLE
             }
-        }
     }
 
-    private fun callLogIn(){
+    private fun callLogin(){
+        val login = Intent(this, LogInActivity::class.java)
+        startActivity(login)
         finish()
     }
 
     private fun callTest(){
-        val test = Intent(this, TestingActivity::class.java)
+        val test = Intent(this, HomeActivity::class.java)
         startActivity(test)
         finish()
     }

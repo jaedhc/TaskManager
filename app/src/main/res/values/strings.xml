@@ -8,6 +8,7 @@
     <string name="text_signin2">Para disfrutar de todas las funciones de la aplicación cree una cuenta</string>
     <string name="text_signin3">¿Ya tiene una cuenta?</string>
     <string name="hint_password">Contraseña</string>
+    <string name="hint_password_repeat">Repita la contraseña</string>
     <string name="btn_signin">Registrarse</string>
 
 
@@ -19,6 +20,7 @@
 
 
     <string name="text_or">O</string>
+    <string name="text_welcome">Bienvenido</string>
 
     <string name="text_error_empty">Este cmapo no puede estar vacío</string>
     <string name="text_error_email">Ingrese un correo electrónico válido</string>
@@ -26,6 +28,8 @@
     <string name="text_error_duplicate">Ya existe una cuenta registrada con este correo</string>
     <string name="text_error_credentials">El correo o la contraseña no coinciden</string>
     <string name="text_error_toomany">Demasiados intentos, espere un momento</string>
+    <string name="text_error_dontmatches">Las contraseñas no coinciden</string>
+    <string name="text_error_passweak">Contraseña debil</string>
     <string name="default_web_client_id">252731654857-97r4ttdub1v9hudku8mlftdn0vn30kba.apps.googleusercontent.com</string>
 
 

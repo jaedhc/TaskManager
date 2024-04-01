@@ -1,6 +1,5 @@
 package com.example.taskmanager.activities
 
-import android.app.Instrumentation.ActivityResult
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -21,11 +20,9 @@ import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
-import com.google.firebase.auth.GoogleAuthCredential
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
-import java.util.UUID
 
 class LogInActivity : AppCompatActivity() {
 
@@ -55,7 +52,7 @@ class LogInActivity : AppCompatActivity() {
 
         val currentUser = auth.currentUser
 
-        if(currentUser != null){
+        if(currentUser != null && currentUser.isEmailVerified){
             callTest()
         }
 
@@ -138,27 +135,18 @@ class LogInActivity : AppCompatActivity() {
 
         auth = Firebase.auth
 
-
         auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener{ task ->
             if(task.isSuccessful){
-                edit.putString("prefEmail", email).commit()
-                val db = Firebase.firestore
-
-                val path2 = db.collection("Tasks").whereEqualTo("userId", email).get().addOnCompleteListener {
-
-                }
-
-                val path = db.collection("Users")
-                path.whereEqualTo("email", email).get().addOnSuccessListener { docs ->
-                    docs.forEach{ doc ->
-                        val name = doc.getString("name")
-                        val uniqueID = doc.getString("userId")
-                        edit.putString("prefName", name).commit()
-                        edit.putString("prefUserId", uniqueID).commit()
-                        edit.apply()
-                        binding.prograssBarLogin.visibility = View.INVISIBLE
-                        callTest()
+                if(auth.currentUser?.isEmailVerified == true){
+                    val db = Firebase.firestore.collection("Users")
+                    db.whereEqualTo("email", email).get().addOnSuccessListener { docs ->
+                        docs.forEach{ doc ->
+                            edit.putString("prefUserId", doc.getString("userId")).apply()
+                            callTest()
+                        }
                     }
+                } else {
+                    Toast.makeText(this, "Verifique su correo", Toast.LENGTH_LONG).show()
                 }
             } else {
 
@@ -185,9 +173,8 @@ class LogInActivity : AppCompatActivity() {
                         Toast.makeText(this, "${task.exception}", Toast.LENGTH_LONG).show()
                     }
                 }
-
-                binding.prograssBarLogin.visibility = View.INVISIBLE
             }
+            binding.prograssBarLogin.visibility = View.INVISIBLE
         }
     }
 
@@ -236,44 +223,32 @@ class LogInActivity : AppCompatActivity() {
     private fun verifyUser(){
         val user = Firebase.auth.currentUser
         user?.let {
-            val name = it.displayName
-            val email = it.email
-            val provider = getString(R.string.google_provider)
-            val photo = it.photoUrl
 
             val sharedPreferences = applicationContext.getSharedPreferences("user", Context.MODE_PRIVATE)
             val edit = sharedPreferences.edit()
 
             val uniqueID = auth.uid.toString()
-
-            edit.putString("prefEmail", email).commit()
-            edit.putString("prefName", name).commit()
-            edit.putString("prefProvider", provider).commit()
-            edit.putString("prefUserId", uniqueID).commit()
-            edit.apply()
-
-            val db = Firebase.firestore
+            edit.putString("prefUserId", uniqueID).apply()
 
             val userData = hashMapOf(
                 "userId" to uniqueID,
-                "name" to name,
-                "email" to email,
+                "name" to it.displayName,
+                "email" to it.email,
                 "provider" to getString(R.string.google_provider),
-                "photoURL" to photo
+                "photoURL" to it.photoUrl
             )
 
-            db.collection("Users").whereEqualTo("userId", uniqueID).get().addOnSuccessListener {
-                if(it.documents.isNotEmpty()){
-                    callTest()
-                } else {
-                    db.collection("Users").document(uniqueID).set(userData).addOnCompleteListener { query ->
+            val db = Firebase.firestore.collection("Users")
+            db.whereEqualTo("userId", uniqueID).get().addOnSuccessListener { user ->
+                if(user.documents.isEmpty()){
+                    db.document(uniqueID).set(userData).addOnCompleteListener { query ->
                         if(query.isSuccessful){
-                            callTest()
+                            Toast.makeText(this, "Exito", Toast.LENGTH_LONG).show()
                         }
                     }
                 }
+                callTest()
             }
-
             binding.prograssBarLogin.visibility = View.INVISIBLE
         }
     }
@@ -284,7 +259,7 @@ class LogInActivity : AppCompatActivity() {
     }
 
     private fun callTest(){
-        val test = Intent(this, TestingActivity::class.java)
+        val test = Intent(this, HomeActivity::class.java)
         startActivity(test)
         finish()
     }

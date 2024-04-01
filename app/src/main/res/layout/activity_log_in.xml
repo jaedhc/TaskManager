@@ -109,7 +109,8 @@
         android:layout_marginEnd="20dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_google"
         app:layout_constraintEnd_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/btn_login">
+        app:layout_constraintTop_toBottomOf="@+id/btn_login"
+        android:visibility="gone">
 
     </View>
 
@@ -121,7 +122,8 @@
         android:text="@string/text_or"
         app:layout_constraintBottom_toTopOf="@+id/btn_google"
         app:layout_constraintEnd_toEndOf="@+id/btn_google"
-        app:layout_constraintStart_toStartOf="@+id/btn_google" />
+        app:layout_constraintStart_toStartOf="@+id/btn_google"
+        android:visibility="gone"/>
 
     <View
         android:layout_width="100dp"
@@ -130,7 +132,8 @@
         android:layout_marginStart="20dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_google"
         app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/btn_login">
+        app:layout_constraintTop_toBottomOf="@+id/btn_login"
+        android:visibility="gone">
 
     </View>
 
@@ -148,7 +151,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.85" />
+        app:layout_constraintVertical_bias="0.85"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/text_forgot"
