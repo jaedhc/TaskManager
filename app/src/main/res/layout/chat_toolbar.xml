@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    android:background="@drawable/bg_toolbar">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="20dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="20dp">
+
+        <ImageView
+            android:id="@+id/toolbar_back"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/back_icon_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/chat_img"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/default_pic"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar_back"
+            app:layout_constraintStart_toEndOf="@+id/toolbar_back"
+            app:layout_constraintTop_toTopOf="@+id/toolbar_back" />
+
+        <TextView
+            android:id="@+id/toolbar_name"
+            style="@style/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="user_placeholder"
+            app:layout_constraintBottom_toBottomOf="@+id/chat_img"
+            app:layout_constraintStart_toEndOf="@+id/chat_img"
+            app:layout_constraintTop_toTopOf="@+id/chat_img" />
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_video"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:outlineProvider="none"
+            android:backgroundTint="@color/transparent"
+            app:layout_constraintBottom_toBottomOf="@+id/chat_img"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/chat_img" >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.zegocloud.uikit.prebuilt.call.invite.widget.ZegoSendCallInvitationButton
+
+                    android:id="@+id/video_call_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:backgroundTint="@color/transparent"
+            android:outlineSpotShadowColor="@color/transparent"
+            android:outlineProvider="none"
+            android:layout_marginEnd="5dp"
+            app:layout_constraintEnd_toStartOf="@+id/card_video"
+            app:layout_constraintTop_toTopOf="@+id/card_video">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.zegocloud.uikit.prebuilt.call.invite.widget.ZegoSendCallInvitationButton
+
+                    android:id="@+id/voice_call_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+        </androidx.cardview.widget.CardView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>

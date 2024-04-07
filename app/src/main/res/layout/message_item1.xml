@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/gray"
+            android:padding="10dp"
+            android:layout_gravity="end"
+            android:layout_margin="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/txt_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="300dp"
+                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet pretium urna. In hac habitasse platea dictumst. Maecenas ac lectus ac lectus tincidunt tincidunt. Nunc ultricies, neque sit amet ultricies feugiat, massa quam aliquet enim, ac tristique neque velit ac quam. Donec vel convallis lectus. Nam dui augue, egestas ac tincidunt et, tristique vel enim. Donec sit amet leo sit amet massa hendrerit tristique. Nunc pulvinar, lectus eget aliquam hendrerit, sapien neque ornare diam, ac interdum metus lacus sed dui. Fusce nec enim eget lacus feugiat feugiat sit amet nec tortor."
+                    android:textAlignment="textStart"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

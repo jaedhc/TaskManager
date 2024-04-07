@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/main_bg"
     android:fitsSystemWindows="false"
-    tools:context=".activities.SignUpActivity">
+    tools:context=".activities.ui.view.SignUpActivity">
 
     <ImageView
         android:id="@+id/imageView"
@@ -151,8 +151,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.85"
-        android:visibility="gone"/>
+        app:layout_constraintVertical_bias="0.85"/>
 
     <TextView
         android:id="@+id/text_forgot"

@@ -1,0 +1,58 @@
+<resources>
+    <string name="app_name">Task Manager</string>
+
+    <!-- USERS LIST -->
+    <string name="user_list_toolbar_title">Select a user</string>
+
+    <!-- SIGNUP -->
+    <string name="hint_username">Username</string>
+    <string name="hint_email">Email</string>
+    <string name="text_signin">Welcome!</string>
+    <string name="text_signin2">To enjoy all of our functionalities please create an account</string>
+    <string name="text_signin3">Already have an account?</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_password_repeat">Repeat Password</string>
+    <string name="btn_signin">Sign Up</string>
+
+    <!-- LOGIN -->
+    <string name="text_login">Welcome back! &#x270C;</string>
+    <string name="btn_login">Log In</string>
+    <string name="btn_google">Google</string>
+    <string name="text_login2">Create account?</string>
+    <string name="text_forgot">Forgot your password?</string>
+    <string name="text_or">Or</string>
+    <string name="text_welcome">Welcome</string>
+
+    <!-- ERRORS -->
+    <string name="text_error_empty">Requiered field</string>
+    <string name="text_error_email">Invalid email</string>
+    <string name="text_error_nouser">There is no account registered with that email</string>
+    <string name="text_error_duplicate">There is already an account with that email</string>
+    <string name="text_error_credentials">Email or Password doesn\'t match</string>
+    <string name="text_error_toomany">Too many tries, wait a moment</string>
+    <string name="text_error_dontmatches">Passwords doesn\'t match</string>
+    <string name="text_error_passweak">Weak Password</string>
+
+
+    <!-- OTHERS -->
+    <string name="google_provider">Google</string>
+    <string name="email_provider">Email</string>
+    <string name="default_prof_pic">https://firebasestorage.googleapis.com/v0/b/task-manager-33cd5.appspot.com/o/User_photos%2Fdefault.jpg?alt=media&amp;token=782ad5ab-2d68-4662-8912-46b7c749ab7b</string>
+
+    <!-- USERS -->
+    <string name="status_online">Online</string>
+    <string name="status_offline">Offline</string>
+
+    <!-- CONFIG -->
+    <string name="change_language">Change language</string>
+    <string-array name="languages">
+        <item name="primer">Language</item>
+        <item name="fort">Spanish</item>
+        <item name="fort2">English</item>
+    </string-array>
+    <string name="btn_close">Log Out</string>
+    <string name="btn_admin">Manage</string>
+
+    <!-- CHAT -->
+    <string name="hint_message">Menssage</string>
+</resources>

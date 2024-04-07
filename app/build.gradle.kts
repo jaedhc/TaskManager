@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.storage.CacheResetOnProcessCanceled.enabled
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -47,6 +45,8 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    //ZEGOCLOUD
+    implementation("com.github.ZEGOCLOUD:zego_uikit_prebuilt_call_android:+")
     //AUTH
     implementation("com.google.firebase:firebase-auth:22.3.1")
     //REALTIME DATABASE
@@ -55,6 +55,14 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    //GSON TO PASS OBJECTS FROM SHAREDPREF
+    implementation("com.google.code.gson:gson:2.10.1")
+    //Implementing ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    //Implementing LiveData
+    implementation("androidx.lifecycle:lifecycle-livedata-core-ktx:2.7.0")
+    //Implementing Fragments
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
     //Firebase BoM
     implementation(platform("com.google.firebase:firebase-bom:32.7.1"))
     //TODO: add the dependencies for firebase products (crashlytics, etc)

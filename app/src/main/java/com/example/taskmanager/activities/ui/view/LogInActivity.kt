@@ -1,14 +1,17 @@
-package com.example.taskmanager.activities
+package com.example.taskmanager.activities.ui.view
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import com.example.taskmanager.R
+import com.example.taskmanager.activities.Utils
+import com.example.taskmanager.activities.casos_uso.casosUsoAtivities
 import com.example.taskmanager.databinding.ActivityLogInBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -29,11 +32,12 @@ class LogInActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLogInBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
-
+    private val casosUsoAtivities by lazy { casosUsoAtivities(this) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLogInBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         init()
     }
 
@@ -44,7 +48,7 @@ class LogInActivity : AppCompatActivity() {
         auth = Firebase.auth
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestIdToken("252731654857-nlvvh7vjsftuqf65ujkuugc1rqfkcgbf.apps.googleusercontent.com")
             .requestEmail()
             .build()
         googleSignInClient = GoogleSignIn.getClient(this, gso)
@@ -130,21 +134,13 @@ class LogInActivity : AppCompatActivity() {
 
     private fun logIn(email: String, pass: String){
         binding.prograssBarLogin.visibility = View.VISIBLE
-        val sharedPreferences = applicationContext.getSharedPreferences("user", Context.MODE_PRIVATE)
-        val edit = sharedPreferences.edit()
 
         auth = Firebase.auth
 
         auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener{ task ->
             if(task.isSuccessful){
                 if(auth.currentUser?.isEmailVerified == true){
-                    val db = Firebase.firestore.collection("Users")
-                    db.whereEqualTo("email", email).get().addOnSuccessListener { docs ->
-                        docs.forEach{ doc ->
-                            edit.putString("prefUserId", doc.getString("userId")).apply()
-                            callTest()
-                        }
-                    }
+                    Utils.setUserInfo(applicationContext, this)
                 } else {
                     Toast.makeText(this, "Verifique su correo", Toast.LENGTH_LONG).show()
                 }
@@ -192,8 +188,7 @@ class LogInActivity : AppCompatActivity() {
             val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
             manageResule(task)
         } else {
-            binding.textView.text = result.toString()
-            print(result.toString())
+            Log.d("Test", result.toString())
             //Toast.makeText(this, result.toString(), Toast.LENGTH_LONG).show()
         }
     }
@@ -220,7 +215,7 @@ class LogInActivity : AppCompatActivity() {
         }
     }
 
-    private fun verifyUser(){
+    fun verifyUser(){
         val user = Firebase.auth.currentUser
         user?.let {
 
@@ -235,7 +230,9 @@ class LogInActivity : AppCompatActivity() {
                 "name" to it.displayName,
                 "email" to it.email,
                 "provider" to getString(R.string.google_provider),
-                "photoURL" to it.photoUrl
+                "status" to "default",
+                "photoURL" to it.photoUrl,
+                "role" to "user"
             )
 
             val db = Firebase.firestore.collection("Users")
@@ -244,10 +241,11 @@ class LogInActivity : AppCompatActivity() {
                     db.document(uniqueID).set(userData).addOnCompleteListener { query ->
                         if(query.isSuccessful){
                             Toast.makeText(this, "Exito", Toast.LENGTH_LONG).show()
+
                         }
                     }
                 }
-                callTest()
+                Utils.setUserInfo(applicationContext, this)
             }
             binding.prograssBarLogin.visibility = View.INVISIBLE
         }

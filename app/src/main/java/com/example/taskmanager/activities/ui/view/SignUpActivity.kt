@@ -1,23 +1,18 @@
-package com.example.taskmanager.activities
+package com.example.taskmanager.activities.ui.view
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
-import android.widget.TextView
 import android.widget.Toast
-import androidx.core.widget.doAfterTextChanged
+import androidx.appcompat.app.AppCompatActivity
 import com.example.taskmanager.R
 import com.example.taskmanager.databinding.ActivityMainBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthUserCollisionException
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
-import java.util.UUID
 
 class SignUpActivity : AppCompatActivity() {
 
@@ -94,35 +89,36 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun signUpUser(name:String, email:String, pass:String){
-        //binding.prograssBarSignup.visibility = View.VISIBLE
+        binding.prograssBarSignup.visibility = View.VISIBLE
 
         auth = Firebase.auth
         val db = Firebase.firestore
-
-        val uniqueID = UUID.randomUUID().toString()
-        val user = hashMapOf(
-            "userId" to uniqueID,
-            "name" to name,
-            "email" to email,
-            "provider" to getString(R.string.email_provider),
-            "photoURL" to getString(R.string.default_prof_pic)
-        )
-
         val sharedPreferences = applicationContext.getSharedPreferences("user", Context.MODE_PRIVATE)
 
         //Creación de una nueva cuenta mediante firebase email auth
         auth.createUserWithEmailAndPassword(email, pass)
             .addOnCompleteListener{ task ->
                 if(task.isSuccessful){
+
+                    val user = hashMapOf(
+                        "userId" to auth.currentUser!!.uid,
+                        "name" to name,
+                        "email" to email,
+                        "provider" to getString(R.string.email_provider),
+                        "status" to "default",
+                        "photoURL" to getString(R.string.default_prof_pic),
+                        "role" to "user",
+                    )
+
                     //Agregar los datos del usuario a la base de datos de firestore
                     db.collection("Users")
-                        .document(uniqueID).set(user)
+                        .document(auth.currentUser!!.uid).set(user)
                         .addOnCompleteListener{
                             if(it.isSuccessful){
                                 Firebase.auth.currentUser?.sendEmailVerification()
                                 Toast.makeText(this, "Verifique su correo electrónico", Toast.LENGTH_LONG).show()
                                 binding.prograssBarSignup.visibility = View.INVISIBLE
-                                //callLogin()
+                                callLogin()
                             } else {
                                 Toast.makeText(this, "${task.exception}", Toast.LENGTH_LONG).show()
                                 binding.prograssBarSignup.visibility = View.INVISIBLE
@@ -131,6 +127,7 @@ class SignUpActivity : AppCompatActivity() {
                 }
                 binding.prograssBarSignup.visibility = View.INVISIBLE
             }
+
     }
 
     private fun callLogin(){
